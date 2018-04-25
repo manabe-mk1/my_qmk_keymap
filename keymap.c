@@ -7,6 +7,26 @@
 #define SYMB 1 // symbols
 #define MDIA 2 // media keys
 
+/*
+ * Alias
+ */
+#define KC_RCLC KC_APP  // 右クリック
+#define KC_WIN  KC_LGUI // Windows
+
+/*
+ * JIS Keymap
+ */
+#define JP_COLN KC_QUOT  // : shift *
+#define JP_AT   KC_LBRC  // @ shift `
+#define JP_HAT  KC_EQL   // ^ shift ~
+#define JP_BSLS KC_RO    // \ (Back Slash) shift _
+#define JP_YEN  KC_JYEN  // \ (YEN) shift |
+#define JP_LBRC KC_RBRC  // [ shift {
+#define JP_RBRC KC_BSLS  // ] shift }
+#define JP_ZKHK KC_GRV   // 半角/全角
+#define JP_HNKN KC_HENK  // 変換
+#define JP_MHKN KC_MHEN  // 無変換
+ 
 enum custom_keycodes {
   PLACEHOLDER = SAFE_RANGE, // can always be here
   EPRM,
@@ -40,23 +60,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Otherwise, it needs KC_*
 [BASE] = LAYOUT_ergodox(  // layer 0 : default
         // left hand
-        KC_EQL,         KC_1,         KC_2,   KC_3,   KC_4,   KC_5,   KC_LEFT,
-        KC_DELT,        KC_Q,         KC_W,   KC_E,   KC_R,   KC_T,   TG(SYMB),
-        KC_BSPC,        KC_A,         KC_S,   KC_D,   KC_F,   KC_G,
-        KC_LSFT,        CTL_T(KC_Z),  KC_X,   KC_C,   KC_V,   KC_B,   ALL_T(KC_NO),
-        LT(SYMB,KC_GRV),KC_QUOT,      LALT(KC_LSFT),  KC_LEFT,KC_RGHT,
-                                              ALT_T(KC_APP),  KC_LGUI,
+        KC_ESC,         KC_1,         KC_2,    KC_3,   KC_4,   KC_5,   JP_ZKHK,
+        KC_TAB,         KC_Q,         KC_W,    KC_E,   KC_R,   KC_T,   TG(SYMB),
+        KC_RCTL,        KC_A,         KC_S,    KC_D,   KC_F,   KC_G,
+        KC_LSFT,        KC_Z,         KC_X,    KC_C,   KC_V,   KC_B,   KC_DELT,
+        KC_LCTL,        KC_QUOT,      KC_LALT, KC_LEFT,JP_MHKN,
+                                              ALT_T(KC_RCLC), KC_WIN,
                                                               KC_HOME,
-                                               KC_SPC,KC_BSPC,KC_END,
+                                      CTL_T(KC_SPC), KC_LSFT, KC_LALT,
         // right hand
-             KC_RGHT,     KC_6,   KC_7,  KC_8,   KC_9,   KC_0,             KC_MINS,
-             TG(SYMB),    KC_Y,   KC_U,  KC_I,   KC_O,   KC_P,             KC_BSLS,
-                          KC_H,   KC_J,  KC_K,   KC_L,   LT(MDIA, KC_SCLN),GUI_T(KC_QUOT),
-             MEH_T(KC_NO),KC_N,   KC_M,  KC_COMM,KC_DOT, CTL_T(KC_SLSH),   KC_RSFT,
-                                  KC_UP, KC_DOWN,KC_LBRC,KC_RBRC,          KC_FN1,
-             KC_LALT,        CTL_T(KC_ESC),
+             KC_RGHT,     KC_6,   KC_7,  KC_8,   KC_9,   KC_0,         KC_MINS,
+             TG(MDIA),    KC_Y,   KC_U,  KC_I,   KC_O,   KC_P,         JP_AT,
+                          KC_H,   KC_J,  KC_K,   KC_L,   KC_SCLN,      JP_COLN,
+             KC_BSPC,     KC_N,   KC_M,  KC_COMM,KC_DOT, KC_SLSH,      JP_BSLS,
+                                  JP_HNKN, KC_DOWN,JP_LBRC,JP_RBRC,    KC_RSFT,
+             KC_LALT, CTL_T(KC_ESC),
              KC_PGUP,
-             KC_PGDN,KC_TAB, KC_ENT
+             KC_PGDN, MO(SYMB), KC_ENT
     ),
 /* Keymap 1: Symbol Layer
  *
@@ -89,16 +109,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           EPRM,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
                                        RGB_MOD,KC_TRNS,
                                                KC_TRNS,
-                               RGB_VAD,RGB_VAI,KC_TRNS,
+                               KC_TRNS,KC_TRNS,KC_TRNS,
        // right hand
-       KC_TRNS, KC_F6,   KC_F7,  KC_F8,   KC_F9,   KC_F10,  KC_F11,
-       KC_TRNS, KC_UP,   KC_7,   KC_8,    KC_9,    KC_ASTR, KC_F12,
-                KC_DOWN, KC_4,   KC_5,    KC_6,    KC_PLUS, KC_TRNS,
-       KC_TRNS, KC_AMPR, KC_1,   KC_2,    KC_3,    KC_BSLS, KC_TRNS,
-                         KC_TRNS,KC_DOT,  KC_0,    KC_EQL,  KC_TRNS,
+       KC_TRNS, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+       KC_TRNS, KC_UP,   KC_NO,   KC_NO,   KC_NO,   KC_ASTR, KC_F12,
+                KC_DOWN, KC_HOME, KC_UP,   KC_END,  KC_PLUS, KC_TRNS,
+       KC_TRNS, KC_AMPR, KC_LEFT, KC_DOWN, KC_RGHT, KC_BSLS, KC_TRNS,
+                         KC_PGUP, KC_PGDN, KC_NO,   KC_EQL,  KC_TRNS,
        RGB_TOG, RGB_SLD,
        KC_TRNS,
-       KC_TRNS, RGB_HUD, RGB_HUI
+       KC_TRNS, KC_TRNS, KC_TRNS
 ),
 /* Keymap 2: Media and mouse keys
  *
@@ -133,10 +153,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   KC_TRNS, KC_TRNS, KC_TRNS,
     // right hand
        KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-       KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MPLY,
-       KC_TRNS,  KC_TRNS, KC_TRNS, KC_MPRV, KC_MNXT, KC_TRNS, KC_TRNS,
-                          KC_VOLU, KC_VOLD, KC_MUTE, KC_TRNS, KC_TRNS,
+       KC_TRNS,  KC_TRNS, KC_7,    KC_8,    KC_9,    KC_TRNS, KC_TRNS,
+                 KC_TRNS, KC_4,    KC_5,    KC_6,    KC_0,    KC_TRNS,
+       KC_TRNS,  KC_TRNS, KC_1,    KC_2,    KC_3,    KC_TRNS, KC_TRNS,
+                          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS,
        KC_TRNS,
        KC_TRNS, KC_TRNS, KC_WBAK
