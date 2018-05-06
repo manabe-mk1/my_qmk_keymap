@@ -26,7 +26,22 @@
 #define JP_ZKHK KC_GRV   // 半角/全角
 #define JP_HNKN KC_HENK  // 変換
 #define JP_MHKN KC_MHEN  // 無変換
- 
+
+#define JP_QUOT KC_AMPR  // '
+#define JP_DQOT KC_AT    // "
+#define JP_BQOT KC_LCBR  // `
+#define JP_TILD KC_PLUS  // ~
+#define JP_LPRN KC_ASTR  // (
+#define JP_RPRN KC_LPRN  // )
+#define JP_LCBR KC_RCBR  // {
+#define JP_RCBR KC_PIPE  // }
+#define JP_EXLM KC_EXLM  // !
+#define JP_HASH KC_HASH  // #
+#define JP_PERC KC_PERC  // %
+#define JP_DLR  KC_DLR   // $
+#define JP_AMPR KC_CIRC  // &
+#define JP_PIPE LSFT(KC_JYEN) // |
+
 enum custom_keycodes {
   PLACEHOLDER = SAFE_RANGE, // can always be here
   EPRM,
@@ -83,13 +98,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,---------------------------------------------------.           ,--------------------------------------------------.
  * |         |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
  * |---------+------+------+------+------+------+------|           |------+------+------+------+------+------+--------|
- * |         |   !  |   @  |   {  |   }  |   |  |      |           |      |   Up |   7  |   8  |   9  |   *  |   F12  |
+ * |   App   |   %  |   '  |   "  |   `  |   |  |      |           |      |  YEN | Home |  Up  | End  |      |   F12  |
  * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |         |   #  |   $  |   (  |   )  |   `  |------|           |------| Down |   4  |   5  |   6  |   +  |        |
+ * |         |   $  |   (  |   [  |   {  |   &  |------|           |------|   #  | Left | Down | Right|      |  Enter |
  * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |         |   %  |   ^  |   [  |   ]  |   ~  |      |           |      |   &  |   1  |   2  |   3  |   \  |        |
+ * |         |   !  |   )  |   ]  |   }  |   ~  |      |           |      |   ^  | PgDn | PgUp |      |      |        |
  * `---------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | EPRM  |      |      |      |      |                                       |      |    . |   0  |   =  |      |
+ *   | EPRM  |      |      |      |      |                                       |      |      |      |      |      |
  *   `-----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |Animat|      |       |Toggle|Solid |
@@ -103,18 +118,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [SYMB] = LAYOUT_ergodox(
        // left hand
        KC_TRNS,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_TRNS,
-       KC_TRNS,KC_EXLM,KC_AT,  KC_LCBR,KC_RCBR,KC_PIPE,KC_TRNS,
-       KC_TRNS,KC_HASH,KC_DLR, KC_LPRN,KC_RPRN,KC_GRV,
-       KC_TRNS,KC_PERC,KC_CIRC,KC_LBRC,KC_RBRC,KC_TILD,KC_TRNS,
+       KC_TRNS,JP_PERC,JP_QUOT,JP_DQOT,JP_BQOT,JP_PIPE,KC_TRNS,
+       KC_TRNS,JP_DLR, JP_LPRN,JP_LBRC,JP_LCBR,JP_AMPR,
+       KC_TRNS,JP_EXLM,JP_RPRN,JP_RBRC,JP_RCBR,JP_TILD,KC_TRNS,
           EPRM,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
                                        RGB_MOD,KC_TRNS,
                                                KC_TRNS,
                                KC_TRNS,KC_TRNS,KC_TRNS,
        // right hand
        KC_TRNS, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-       KC_TRNS, KC_UP,   KC_HOME, KC_UP,   KC_END,  KC_TRNS, KC_F12,
-                KC_DOWN, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_ENT,
-       KC_TRNS, KC_AMPR, KC_PGDN, KC_PGUP, KC_NO,   KC_TRNS, KC_TRNS,
+       KC_TRNS, JP_YEN,  KC_HOME, KC_UP,   KC_END,  KC_TRNS, KC_F12,
+                JP_HASH, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_ENT,
+       KC_TRNS, JP_HAT,  KC_PGDN, KC_PGUP, KC_NO,   KC_TRNS, KC_TRNS,
                          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
        RGB_TOG, RGB_SLD,
        KC_TRNS,
