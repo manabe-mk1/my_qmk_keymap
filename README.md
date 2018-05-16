@@ -8,6 +8,9 @@ https://github.com/qmk/qmk_firmware
 keyboards/ergodox_ez/keymaps
 ```
 
+### ビルド環境
+https://docs.qmk.fm/install-build-tools#linux
+
 ### ビルド
 
 ファームウェア本体のトップレベルで make
@@ -17,3 +20,7 @@ make ergodox_ez:my_ergodox_keymap
 ```
 
 https://docs.qmk.fm/build-compile-instructions
+
+### 書き込み
+
+https://www.pjrc.com/teensy/loader.html
