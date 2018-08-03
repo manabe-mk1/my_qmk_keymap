@@ -6,6 +6,7 @@
 #define BASE 0 // default layer
 #define SYMB 1 // symbols
 #define MDIA 2 // media keys
+#define CSOR 3 // cusor keys
 
 /*
  * Alias
@@ -91,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   JP_HNKN, JP_LBRC,JP_RBRC,JP_YEN,     KC_RSFT,
              KC_PSCR, KC_SLCK,
              KC_PGUP,
-             KC_PGDN, KC_ENT, MO(SYMB)
+             KC_PGDN, KC_ENT, MO(CSOR)
     ),
 /* Keymap 1: Symbol Layer
  *
@@ -173,6 +174,47 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_TRNS,  KC_TRNS, KC_1,    KC_2,    KC_3,    KC_SLSH, KC_TRNS,
                           KC_0,    KC_NO,   KC_DOT,  KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS,
+       KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS
+),
+/* Keymap 3: Cusor and Symbol keys Layer
+ *
+ * ,---------------------------------------------------.           ,--------------------------------------------------.
+ * |         |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
+ * |---------+------+------+------+------+------+------|           |------+------+------+------+------+------+--------|
+ * |         |   !  |   "  |   #  |   $  |   %  |      |           |      |      | NONE |  Up  | NONE |      |   F12  |
+ * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |         |   &  |   '  |   (  |   )  |   |  |------|           |------| HOME | Left | Down | Right| END  |  Enter |
+ * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |         |      |      |      |      |      |      |           |      |      | PgDn | PgUp | NONE |      |        |
+ * `---------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+ *   |       |      |      |      |      |                                       |      |      |      |      |      |
+ *   `-----------------------------------'                                       `----------------------------------'
+ *                                        ,-------------.       ,-------------.
+ *                                        |Animat|      |       |Toggle|Solid |
+ *                                 ,------|------|------|       |------+------+------.
+ *                                 |      |      |      |       |      |      |      |
+ *                                 |      |      |------|       |------|      |      |
+ *                                 |      |      |      |       |      |      |      |
+ *                                 `--------------------'       `--------------------'
+ */
+[CSOR] = LAYOUT_ergodox(
+       // left hand
+       KC_TRNS, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_TRNS,
+       KC_TRNS, JP_EXLM, JP_DQOT, JP_HASH, JP_DLR,  JP_PERC, KC_TRNS,
+       KC_TRNS, JP_AMPR, JP_QUOT, JP_LPRN, JP_RPRN, JP_PIPE,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+                                       RGB_MOD,KC_TRNS,
+                                               KC_TRNS,
+                               KC_TRNS,KC_TRNS,KC_TRNS,
+       // right hand
+       KC_TRNS, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+       KC_TRNS, KC_TRNS, KC_NO,   KC_UP,   KC_NO,   KC_TRNS, KC_F12,
+                KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT, KC_END,  KC_ENT,
+       KC_TRNS, KC_TRNS, KC_PGDN, KC_PGUP, KC_NO,   KC_TRNS, KC_TRNS,
+                         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       RGB_TOG, RGB_SLD,
        KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS
 ),
