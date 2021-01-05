@@ -1,12 +1,23 @@
-#include QMK_KEYBOARD_H
-#include "debug.h"
-#include "action_layer.h"
-#include "version.h"
+/* Copyright 2020 ZSA Technology Labs, Inc <@zsa>
+ * Copyright 2020 Jack Humbert <jack.humb@gmail.com>
+ * Copyright 2020 Christopher Courtney <drashna@live.com> (@drashna)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-#define BASE 0 // default layer
-#define SYMB 1 // symbols
-#define MDIA 2 // media keys
-#define CSOR 3 // cusor keys
+#include QMK_KEYBOARD_H
+#include "version.h"
 
 /*
  * Alias
@@ -43,312 +54,54 @@
 #define JP_AMPR KC_CIRC  // &
 #define JP_PIPE LSFT(KC_JYEN) // |
 
+enum layers {
+    BASE,  // default layer
+    SYMB,  // symbols
+    MDIA,  // media keys
+    CSOR,  // cusor keys
+};
+
 enum custom_keycodes {
-  PLACEHOLDER = SAFE_RANGE, // can always be here
-  EPRM,
-  VRSN,
-  RGB_SLD
+    VRSN = ML_SAFE_RANGE,
 };
 
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* Keymap 0: Basic layer
- *
- * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |  ESC   |   1! |   2" |   3# |   4$ |   5% |Insert|           |  ^~  |   6& |   7' |   8( |   9) |   0  |   -=   |
- * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |  TAB   |   Q  |   W  |   E  |   R  |   T  |  DEL |           | NONE |   Y  |   U  |   I  |   O  |   P  |   @`   |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | RCtrl  |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   ;+ |   :*   |
- * |--------+------+------+------+------+------|  L1  |           |  BS  |------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   /? |   \_   |
- * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |LCtrl |  Win | LAlt | Left |  MHK |                                       |  HK  |   [  |   ]  |   \| |  RS  |
- *   `----------------------------------'                                       `----------------------------------'
- *                                        ,-------------.       ,-------------.
- *                                        | App  |  L2  |       | Print Screen | Scroll Lock |
- *                                 ,------|------|------|       |------+--------+------.
- *                                 |      |      | Home |       | PgUp |        |      |
- *                                 | Space| LCtrl|------|       |------|  Enter |  L1  |
- *                                 | Shift|      | LAlt |       | PgDn |        |      |
- *                                 `--------------------'       `----------------------'
- */
-// If it accepts an argument (i.e, is a function), it doesn't need KC_.
-// Otherwise, it needs KC_*
-[BASE] = LAYOUT_ergodox(  // layer 0 : default
-        // left hand
-        KC_ESC,         KC_1,         KC_2,    KC_3,   KC_4,   KC_5,   KC_INS,
-        KC_TAB,         KC_Q,         KC_W,    KC_E,   KC_R,   KC_T,   KC_DELT,
-        KC_RCTL,        KC_A,         KC_S,    KC_D,   KC_F,   KC_G,
-        KC_LSFT,        KC_Z,         KC_X,    KC_C,   KC_V,   KC_B,   TG(SYMB),
-        KC_LCTL,        KC_WIN,       KC_LALT, KC_LEFT,JP_MHKN,
-                                              ALT_T(KC_RCLC), TG(MDIA),
-                                                              KC_HOME,
-                                      SFT_T(KC_SPC), KC_LCTL, KC_LALT,
-        // right hand
-             JP_HAT,      KC_6,   KC_7,  KC_8,   KC_9,   KC_0,         KC_MINS,
-             KC_NO,       KC_Y,   KC_U,  KC_I,   KC_O,   KC_P,         JP_AT,
-                          KC_H,   KC_J,  KC_K,   KC_L,   KC_SCLN,      JP_COLN,
-             KC_BSPC,     KC_N,   KC_M,  KC_COMM,KC_DOT, KC_SLSH,     JP_BSLS,
-                                  JP_HNKN, JP_LBRC,JP_RBRC,JP_YEN,     KC_RSFT,
-             KC_PSCR, KC_SLCK,
-             KC_PGUP,
-             KC_PGDN, KC_ENT, MO(CSOR)
+    [BASE] = LAYOUT_moonlander(
+        KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_LEFT,           KC_RGHT, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
+        KC_DEL,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    TG(SYMB),         TG(SYMB), KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
+        KC_BSPC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_HYPR,           KC_MEH,  KC_H,    KC_J,    KC_K,    KC_L,    LT(MDIA, KC_SCLN), LGUI_T(KC_QUOT),
+        KC_LSFT, LCTL_T(KC_Z),KC_X,KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  RCTL_T(KC_SLSH), KC_RSFT,
+    LT(SYMB,KC_GRV),WEBUSB_PAIR,A(KC_LSFT),KC_LEFT, KC_RGHT,  LALT_T(KC_APP),    RCTL_T(KC_ESC),   KC_UP,   KC_DOWN, KC_LBRC, KC_RBRC, MO(SYMB),
+                                            KC_SPC,  KC_BSPC, KC_LGUI,           KC_LALT,  KC_TAB,  KC_ENT
     ),
-/* Keymap 1: Symbol Layer
- *
- * ,---------------------------------------------------.           ,--------------------------------------------------.
- * |         |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
- * |---------+------+------+------+------+------+------|           |------+------+------+------+------+------+--------|
- * |         |   %  |   '  |   "  |   `  |   |  |      |           |      |  YEN | PgDn |  Up  | PgUp |      |   F12  |
- * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |         |   $  |   (  |   [  |   {  |   &  |------|           |------|   #  | Left | Down | Right|      |  Enter |
- * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |         |      |      |      |      |      |      |           |      |   ^  | Home | NONE | End  |      |        |
- * `---------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |       |      |      |      |      |                                       |      |      |      |      |      |
- *   `-----------------------------------'                                       `----------------------------------'
- *                                        ,-------------.       ,-------------.
- *                                        |Animat|      |       |Toggle|Solid |
- *                                 ,------|------|------|       |------+------+------.
- *                                 |Bright|Bright|      |       |      |      |      |
- *                                 |ness- |ness+ |------|       |------|      |      |
- *                                 |      |      |      |       |      |      |      |
- *                                 `--------------------'       `--------------------'
- */
-// SYMBOLS
-[SYMB] = LAYOUT_ergodox(
-       // left hand
-       KC_TRNS,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_TRNS,
-       KC_TRNS,JP_PERC,JP_QUOT,JP_DQOT,JP_BQOT,JP_PIPE,KC_TRNS,
-       KC_TRNS,JP_DLR, JP_LPRN,JP_LBRC,JP_LCBR,JP_AMPR,
-       KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
-       KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
-                                       RGB_MOD,KC_TRNS,
-                                               KC_TRNS,
-                               KC_TRNS,KC_TRNS,KC_TRNS,
-       // right hand
-       KC_TRNS, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-       KC_TRNS, JP_YEN,  KC_PGDN, KC_UP,   KC_PGUP, KC_TRNS, KC_F12,
-                JP_HASH, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_ENT,
-       KC_TRNS, JP_HAT,  KC_HOME, KC_NO,   KC_END,  KC_TRNS, KC_TRNS,
-                         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-       RGB_TOG, RGB_SLD,
-       KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_TRNS
-),
-/* Keymap 2: Media and mouse keys
- *
- * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |Version |      |      |      |      |      |      |           |Browser back|      |      |      |      |   *  |        |
- * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      | MsUp |      |      |      |           |      |      |   7  |   8  |   9  |   -  |        |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |MsLeft|MsDown|MsRght|      |------|           |------|      |   4  |   5  |   6  |   +  |        |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |           |      |      |   1  |   2  |   3  |   /  |        |
- * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | EPRM |      |      | Lclk | Rclk |                                       |   0  |      |   .  |      |      |
- *   `----------------------------------'                                       `----------------------------------'
- *                                        ,-------------.       ,-------------.
- *                                        |      |      |       |      |      |
- *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |      |       |      |      |Brwser|
- *                                 |      |      |------|       |------|      |Back  |
- *                                 |      |      |      |       |      |      |      |
- *                                 `--------------------'       `--------------------'
- */
-// MEDIA AND MOUSE
-[MDIA] = LAYOUT_ergodox(
-       VRSN,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_MS_U, KC_TRNS, KC_TRNS, KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_MS_L, KC_MS_D, KC_MS_R, KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-          EPRM, KC_TRNS, KC_TRNS, KC_BTN1, KC_BTN2,
-                                           KC_TRNS, KC_TRNS,
-                                                    KC_TRNS,
-                                  KC_TRNS, KC_TRNS, KC_TRNS,
-    // right hand
-       KC_WBAK,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_ASTR, KC_TRNS,
-       KC_TRNS,  KC_TRNS, KC_7,    KC_8,    KC_9,    KC_MINS, KC_TRNS,
-                 KC_TRNS, KC_4,    KC_5,    KC_6,    KC_PLUS, KC_TRNS,
-       KC_TRNS,  KC_TRNS, KC_1,    KC_2,    KC_3,    KC_SLSH, KC_TRNS,
-                          KC_0,    KC_NO,   KC_DOT,  KC_TRNS, KC_TRNS,
-       KC_TRNS, KC_TRNS,
-       KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_TRNS
-),
-/* Keymap 3: Cusor and Symbol keys Layer
- *
- * ,---------------------------------------------------.           ,--------------------------------------------------.
- * |         |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
- * |---------+------+------+------+------+------+------|           |------+------+------+------+------+------+--------|
- * |         |   !  |   "  |   #  |   $  |   %  |      |           |      |      | NONE |  Up  | NONE |      |   F12  |
- * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |         |   &  |   '  |   (  |   )  |   |  |------|           |------| HOME | Left | Down | Right| END  |  Enter |
- * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |         |      |      |      |      |      |      |           |      |      | PgDn | PgUp | NONE |      |        |
- * `---------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |       |      |      |      |      |                                       |      |      |      |      |      |
- *   `-----------------------------------'                                       `----------------------------------'
- *                                        ,-------------.       ,-------------.
- *                                        |Animat|      |       |Toggle|Solid |
- *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |      |       |      |      |      |
- *                                 |      |      |------|       |------|      |      |
- *                                 |      |      |      |       |      |      |      |
- *                                 `--------------------'       `--------------------'
- */
-[CSOR] = LAYOUT_ergodox(
-       // left hand
-       KC_TRNS, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_TRNS,
-       KC_TRNS, JP_EXLM, JP_DQOT, JP_HASH, JP_DLR,  JP_PERC, KC_TRNS,
-       KC_TRNS, JP_AMPR, JP_QUOT, JP_LPRN, JP_RPRN, JP_PIPE,
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                                       RGB_MOD,KC_TRNS,
-                                               KC_TRNS,
-                               KC_TRNS,KC_TRNS,KC_TRNS,
-       // right hand
-       KC_TRNS, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-       KC_TRNS, KC_TRNS, KC_NO,   KC_UP,   KC_NO,   KC_TRNS, KC_F12,
-                KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT, KC_END,  KC_ENT,
-       KC_TRNS, KC_TRNS, KC_PGDN, KC_PGUP, KC_NO,   KC_TRNS, KC_TRNS,
-                         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-       RGB_TOG, RGB_SLD,
-       KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_TRNS
-),
-};
 
-const uint16_t PROGMEM fn_actions[] = {
-    [1] = ACTION_LAYER_TAP_TOGGLE(SYMB)                // FN1 - Momentary Layer 1 (Symbols)
-};
+    [SYMB] = LAYOUT_moonlander(
+        VRSN,    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,           _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+        _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE, _______,           _______, KC_UP,   KC_7,    KC_8,    KC_9,    KC_ASTR, KC_F12,
+        _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,  _______,           _______, KC_DOWN, KC_4,    KC_5,    KC_6,    KC_PLUS, _______,
+        _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD,                             KC_AMPR, KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
+        EEP_RST, _______, _______, _______, _______,          RGB_VAI,           RGB_TOG,          _______, KC_DOT,  KC_0,    KC_EQL,  _______,
+                                            RGB_HUD, RGB_VAD, RGB_HUI, TOGGLE_LAYER_COLOR,_______, _______
+    ),
 
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
-{
-  // MACRODOWN only works in this function
-  switch(id) {
-    case 0:
-      if (record->event.pressed) {
-        SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
-      }
-      break;
-    case 1:
-      if (record->event.pressed) { // For resetting EEPROM
-        eeconfig_init();
-      }
-      break;
-  }
-  return MACRO_NONE;
+    [MDIA] = LAYOUT_moonlander(
+        LED_LEVEL,_______,_______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, RESET,
+        _______, _______, _______, KC_MS_U, _______, _______, _______,           _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______,           _______, _______, _______, _______, _______, _______, KC_MPLY,
+        _______, _______, _______, _______, _______, _______,                             _______, _______, KC_MPRV, KC_MNXT, _______, _______,
+        _______, _______, _______, KC_BTN1, KC_BTN2,         _______,            _______,          KC_VOLU, KC_VOLD, KC_MUTE, _______, _______,
+                                            _______, _______, _______,           _______, _______, _______
+    ),
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    // dynamically generate these.
-    case EPRM:
-      if (record->event.pressed) {
-        eeconfig_init();
-      }
-      return false;
-      break;
-    case VRSN:
-      if (record->event.pressed) {
-        SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
-      }
-      return false;
-      break;
-    case RGB_SLD:
-      if (record->event.pressed) {
-        #ifdef RGBLIGHT_ENABLE
-          rgblight_mode(1);
-        #endif
-      }
-      return false;
-      break;
-  }
-  return true;
-}
-
-// Runs just one time when the keyboard initializes.
-void matrix_init_user(void) {
-#ifdef RGBLIGHT_COLOR_LAYER_0
-  rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
-#endif
-};
-
-// Runs constantly in the background, in a loop.
-void matrix_scan_user(void) {
-
-};
-
-// Runs whenever there is a layer state change.
-uint32_t layer_state_set_user(uint32_t state) {
-  ergodox_board_led_off();
-  ergodox_right_led_1_off();
-  ergodox_right_led_2_off();
-  ergodox_right_led_3_off();
-
-  uint8_t layer = biton32(state);
-  switch (layer) {
-      case 0:
-        #ifdef RGBLIGHT_COLOR_LAYER_0
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
-        #else
-        #ifdef RGBLIGHT_ENABLE
-          rgblight_init();
-        #endif
-        #endif
-        break;
-      case 1:
-        ergodox_right_led_1_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_1
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_1);
-        #endif
-        break;
-      case 2:
-        ergodox_right_led_2_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_2
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_2);
-        #endif
-        break;
-      case 3:
-        ergodox_right_led_3_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_3
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_3);
-        #endif
-        break;
-      case 4:
-        ergodox_right_led_1_on();
-        ergodox_right_led_2_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_4
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_4);
-        #endif
-        break;
-      case 5:
-        ergodox_right_led_1_on();
-        ergodox_right_led_3_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_5
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_5);
-        #endif
-        break;
-      case 6:
-        ergodox_right_led_2_on();
-        ergodox_right_led_3_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_6
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_6);
-        #endif
-        break;
-      case 7:
-        ergodox_right_led_1_on();
-        ergodox_right_led_2_on();
-        ergodox_right_led_3_on();
-        #ifdef RGBLIGHT_COLOR_LAYER_7
-          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_6);
-        #endif
-        break;
-      default:
-        break;
+    if (record->event.pressed) {
+        switch (keycode) {
+        case VRSN:
+            SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+            return false;
+        }
     }
-
-  return state;
-};
+    return true;
+}
