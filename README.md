@@ -4,6 +4,9 @@
 
 https://github.com/qmk/qmk_firmware
 
+Basic Keycodes
+https://beta.docs.qmk.fm/using-qmk/simple-keycodes/keycodes_basic
+
 ### ビルド環境構築
 
 python 3.6 以上が必要
