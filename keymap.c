@@ -79,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 ,------|------|------|       |------+--------+------.
  *                                 |      |      | Home |       | PgUp |        |      |
  *                                 | Space| LCtrl|------|       |------|  Enter |  L1  |
- *                                 | Shift|      | LAlt |       | PgDn |        |      |
+ *                                 |      |      | LAlt |       | PgDn |        |      |
  *                                 `--------------------'       `----------------------'
  */
 // If it accepts an argument (i.e, is a function), it doesn't need KC_.
@@ -93,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL,        KC_WIN,       KC_LALT, KC_LEFT,JP_MHKN,
                                                     TG(MDIA), TG(MAC),
                                                               KC_HOME,
-                                      SFT_T(KC_SPC), KC_LCTL, KC_LALT,
+                                             KC_SPC, KC_LCTL, KC_LALT,
         // right hand
              JP_HAT,      KC_6,   KC_7,  KC_8,   KC_9,   KC_0,         KC_MINS,
              KC_NO,       KC_Y,   KC_U,  KC_I,   KC_O,   KC_P,         JP_AT,
@@ -113,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_MCMD,        KC_MOPT,      KC_LALT, KC_LEFT,KC_MEIS,
                                                     TG(MDIA), TG(MAC),
                                                               KC_HOME,
-                                      SFT_T(KC_SPC), KC_LCTL, KC_LALT,
+                                             KC_SPC, KC_LCTL, KC_LALT,
         // right hand
              JP_HAT,      KC_6,   KC_7,  KC_8,   KC_9,   KC_0,         KC_MINS,
              KC_NO,       KC_Y,   KC_U,  KC_I,   KC_O,   KC_P,         JP_AT,
